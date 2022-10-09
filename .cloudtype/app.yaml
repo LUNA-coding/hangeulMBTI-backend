@@ -1,8 +1,0 @@
-name: hangeulmbti-backend
-app: dockerfile
-options:
-  ports: 8080
-  dockerfile: Dockerfile
-  git:
-    branch: main
-    url: https://github.com/LUNA-coding/hangeulMBTI-backend.git

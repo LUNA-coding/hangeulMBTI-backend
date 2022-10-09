@@ -10,10 +10,24 @@ jobs:
     name: deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect repository
+        uses: cloudtype-github-actions/connect@v1
         with:
-          node-version: "16"
-      - run: npm i -g @cloudtype/cli
-      - run: ctype login -t ${{ secrets.CLOUDTYPE_TOKEN }}
-      - run: ctype apply
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: hangeulmbti-backend
+          yaml: |-
+            name: hangeulmbti-backend
+            app: dockerfile
+            options:
+              ports: 8080
+              dockerfile: Dockerfile
+              git:
+                branch: main
+                url: https://github.com/LUNA-coding/hangeulMBTI-backend.git
+              start: wget -O /app/firebase-adminkey.json ${{ secrets.FIREBASE_ADMINKEY_URL }} && python server.py
