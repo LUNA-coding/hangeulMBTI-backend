@@ -4,6 +4,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 from datetime import datetime
+from pytz import timezone
 
 
 app = Flask(__name__)
@@ -22,7 +23,7 @@ def hello():
 
 @app.route('/', methods=['POST'])
 def main():
-    nowTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    nowTime = datetime.now(timezone('Asia/Seoul')).strftime('%Y-%m-%d %H:%M:%S')
     
     requestData = request.json
     phoneNum = requestData['phoneNum']
